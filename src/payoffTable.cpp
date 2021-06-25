@@ -172,3 +172,7 @@ void payoffTable::printaTabela(){
         cout << endl;
     }
 }
+
+float payoffTable::getRetorno(int linha, int coluna){
+    return this->payTable[linha][coluna];
+}

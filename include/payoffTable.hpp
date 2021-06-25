@@ -1,3 +1,5 @@
+#ifndef PAYOFFTABLE_HPP
+#define PAYOFFTABLE_HPP
 #include <iostream>
 
 class payoffTable {
@@ -9,4 +11,6 @@ class payoffTable {
     ~payoffTable();
     
     void printaTabela();
+    float getRetorno( int linha , int coluna);
 };
+#endif

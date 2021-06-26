@@ -23,6 +23,8 @@ class dadosAposta{
     ~dadosAposta();
 
     void realizaRodadas();
+    void sorteiaNumeros();
+    int checaQtdAcertos();
 
 };
 #endif

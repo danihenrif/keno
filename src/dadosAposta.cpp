@@ -11,56 +11,62 @@ dadosAposta::~dadosAposta(){
 
 }
 
-void dadosAposta::realizaRodadas(){
+void dadosAposta::sorteiaNumeros(){
     
-    vector<float>::iterator inicio = this->numerosUsuario.begin();
-    vector<float>::iterator fim = this->numerosUsuario.end();
-
-
-    float valorRetorno;
     int numeroRandomico;
-    int qtdAcertos = 0;
-    int numerosSorteados;
+    int qtdNumerosSorteados = 0;
     bool repete;
     int p;
+    
+    while( qtdNumerosSorteados != 20 ){
+        p=0;
+        repete = 0;
+        numeroRandomico = 1+rand()%80;
+            
+        //Checa se o número já se repetiu
+        while( p != this->numerosSorteados.size() ){
+            if( this->numerosSorteados[p] == numeroRandomico ){
+                p = this->numerosSorteados.size();
+                repete = 1;
+            }
+            else{
+                p++;
+            }
+        }
+            
+        //Se não se repetiu entra como valor sorteado
+        if(!repete){
+            this->numerosSorteados.push_back( numeroRandomico );
+            qtdNumerosSorteados++;
+        }
+    }   
+}
+
+int dadosAposta::checaQtdAcertos(){
+    vector<float>::iterator inicio = this->numerosUsuario.begin();
+    vector<float>::iterator fim = this->numerosUsuario.end();
+    int qtdAcertos = 0;
+    
+    while( inicio != fim ){
+        for( int j = 0 ; j < 20 ; j++ ){
+            if( *inicio == this->numerosSorteados[j] ){
+                qtdAcertos++;
+            }
+        }
+        inicio++;
+    }
+    return qtdAcertos;
+}
+
+void dadosAposta::realizaRodadas(){
+    
+    float valorRetorno;
+    int qtdAcertos;
 
     for(int i = 0 ; i < this->qtdApostas ; i++){    
-        numerosSorteados = 0;
-        
-        //Sorteia os numeros
-        while( numerosSorteados != 20 ){
-            p=0;
-            repete = 0;
-            numeroRandomico = 1+rand()%80;
-            
-            //Checa se o número já se repetiu
-            while( p != this->numerosSorteados.size() ){
-                if( this->numerosSorteados[p] == numeroRandomico ){
-                    p = this->numerosSorteados.size();
-                    repete = 1;
-                }
-                else{
-                    p++;
-                }
-            }
-            
-            //Se não se repetiu entra como valor sorteado
-            if(!repete){
-                this->numerosSorteados.push_back( numeroRandomico );
-                numerosSorteados++;
-            }
-        }
 
-        //Checa a quantidade de acertos
-        while( inicio != fim ){
-            for( int j = 0 ; j < 20 ; j++ ){
-                if( *inicio == this->numerosSorteados[j] ){
-                    qtdAcertos++;
-                }
-            }
-            inicio++;
-        }
-
+        sorteiaNumeros();
+        qtdAcertos = checaQtdAcertos();
 
         //Direciona os valores ganhados ou perdidos
         if( qtdAcertos == 0){

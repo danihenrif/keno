@@ -1,5 +1,4 @@
-#include "../include/dadosAposta.hpp">
-
+#include "../include/dadosAposta.hpp"
 
 dadosAposta::dadosAposta( float dinheiroInicial, int rodadas, vector<float> numerosApostados, payoffTable *tabela){
     this->valorInicial = dinheiroInicial;
@@ -14,32 +13,61 @@ dadosAposta::~dadosAposta(){
 
 void dadosAposta::realizaRodadas(){
     
+    vector<float>::iterator inicio = this->numerosUsuario.begin();
+    vector<float>::iterator fim = this->numerosUsuario.end();
+
+
     float valorRetorno;
+    int numeroRandomico;
+    int qtdAcertos = 0;
+    int numerosSorteados;
+    bool repete;
+    int p;
 
-    for(int i = 0 ; i < this->qtdApostas ; i++){
-        this->qtdAcertos = 0;
-
-        //Sorteia os números
-        for(int j = 0 ; j < 20 ; j++){
-            this->numerosSorteados.push_back( 1+rand()%80);
-        }
-
-        //Checa a quantidade de acertos
-        for( int i = 0 ; i < this->numerosUsuario.size() ; i++ ){
-            for(int j = 0 ; j < 20 ; j++){
-                if( this->numerosUsuario[i] == this->numerosSorteados[j]){
-                    qtdAcertos++;
+    for(int i = 0 ; i < this->qtdApostas ; i++){    
+        numerosSorteados = 0;
+        
+        //Sorteia os numeros
+        while( numerosSorteados != 20 ){
+            p=0;
+            repete = 0;
+            numeroRandomico = 1+rand()%80;
+            
+            //Checa se o número já se repetiu
+            while( p != this->numerosSorteados.size() ){
+                if( this->numerosSorteados[p] == numeroRandomico ){
+                    p = this->numerosSorteados.size();
+                    repete = 1;
                 }
+                else{
+                    p++;
+                }
+            }
+            
+            //Se não se repetiu entra como valor sorteado
+            if(!repete){
+                this->numerosSorteados.push_back( numeroRandomico );
+                numerosSorteados++;
             }
         }
 
+        //Checa a quantidade de acertos
+        while( inicio != fim ){
+            for( int j = 0 ; j < 20 ; j++ ){
+                if( *inicio == this->numerosSorteados[j] ){
+                    qtdAcertos++;
+                }
+            }
+            inicio++;
+        }
+
+
         //Direciona os valores ganhados ou perdidos
-        if( this->qtdAcertos == 0){
+        if( qtdAcertos == 0){
             cout << "     Você não acertou nenhum número e com isso perdeu todo o seu valor apostado :C" << "Tente novamente" << endl;
         }
         else{
-            valorRetorno = this->tabelaDePagamento->getRetorno( this->numerosUsuario.size(), qtdAcertos);
-            cout << "Valor de retorno : " << valorRetorno << endl;         
+            valorRetorno = this->tabelaDePagamento->getRetorno( this->numerosUsuario.size(), qtdAcertos);      
         }
     }
 

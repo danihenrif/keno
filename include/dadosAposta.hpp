@@ -13,7 +13,6 @@ class dadosAposta{
     private:
     float valorInicial;
     int qtdApostas;
-    int qtdAcertos;
     vector<float> numerosUsuario;
     vector<float> numerosSorteados;
     payoffTable *tabelaDePagamento;

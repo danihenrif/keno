@@ -13,6 +13,8 @@ payoffTable::payoffTable(){
         }
     }
 
+    //preenche linha 0
+
     //preenche linha 1
     this->payTable[1][1] = 3;
 
@@ -166,11 +168,34 @@ payoffTable::payoffTable(){
 
 void payoffTable::printaTabela(){
     for(int i = 0 ; i < 16 ; i++){
-        for(int j = 0 ; j < 16 ; j++){
-            cout << this->payTable[i][j] << "     ";
+        if(i == 0){
+            cout << "     " << i << "spots   ";
+        }
+        else if(i > 0 and i<10){
+            cout << "     "<< i << "spots   ";
+        }
+        else if(i > 9){
+            cout << "     " << i << "spots  ";
+        }
+
+        for(int j = 0 ; j <= i ; j++){
+            cout << this->payTable[i][j] << "    ";
         }
         cout << endl;
     }
+    cout << endl;
+}
+
+void payoffTable::printaRetorno( int qtd ){
+    cout << "     " << "**********************************************" << endl;
+    cout << "     " << "         HITS        |        RETORNO        " << endl;
+    
+    for( int i = 0 ; i <= qtd ; i++ ){
+        cout << "     " << "          "<< i << "          |         " << this->payTable[qtd][i] << "           ";
+        cout << endl;
+    }
+    cout << "     " << "**********************************************" << endl << endl;  
+
 }
 
 float payoffTable::getRetorno(int linha, int coluna){

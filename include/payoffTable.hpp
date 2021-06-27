@@ -11,6 +11,7 @@ class payoffTable {
     ~payoffTable();
     
     void printaTabela();
+    void printaRetorno(int qtd);
     float getRetorno( int linha , int coluna);
 };
 #endif

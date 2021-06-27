@@ -3,34 +3,64 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+
 #include <vector>
 using std::vector;
 
+#include <fstream>
+using std::ifstream;
 
 #include "../include/payoffTable.hpp"
 #include "../include/dadosAposta.hpp"
 
-
+void apostaLida( float a, int b, int c, vector<int> vetor, int qtd ){
+    int i = 0;
+    cout << "     >>> " << "Aposta lida com sucesso!" << endl ;
+    cout << "     " << "Você apostará um total de" << " R$" << a*b << endl;
+    cout << "     " << "Jogará um total de " << b << " rodadas" << endl << endl << endl;
+    cout << "     " << "Sua aposta tem " << c << " números," << "são eles: ";
+    cout << "[";
+    while( i < qtd){
+        if( i == qtd-1 ){
+            cout << vetor[i];
+        }
+        else{
+            cout << vetor[i] << ",";
+        }
+        i++;
+    }
+    cout << "]" << endl;
+    cout << "     " << "Você pode checar os seus possíveis retornos na tabela :" << endl << endl;
+ }
 
 int main( int argc, char *argv[]){
     //Instancia a tabela
     payoffTable *tabela = new payoffTable();
     
-    float saldoInicial = atof(argv[1]), rodadas = atof(argv[2]);
+    //Guarda a quantidade de números que serão apostados
+    int qtdNumerosApostados;
     
-    vector <float> numerosApostados;
+    
+    float saldoInicial = atof(argv[1]), valorApostado = atof(argv[3]); 
+    int rodadas = atoi(argv[2]);
 
+    vector <int> numerosApostados;
+    
     //Carregar o vetor com os valores de aposta
-    for ( int i = 3; i < argc ; i++ ){
+    for ( int i = 4; i < argc ; i++ ){
         numerosApostados.push_back( atof(argv[i]));
     }
 
+    qtdNumerosApostados = numerosApostados.size();
+
+    apostaLida( valorApostado, rodadas, qtdNumerosApostados, numerosApostados,qtdNumerosApostados );
+    tabela->printaRetorno(qtdNumerosApostados); 
+
     //Instancia os dados
-    dadosAposta *dados = new dadosAposta( saldoInicial, rodadas, numerosApostados, tabela);
+    dadosAposta *dados = new dadosAposta( saldoInicial, rodadas, valorApostado, numerosApostados, tabela);
 
     //Realiza as rodadas de aposta
     dados->realizaRodadas();
 
     return 0;
-
 }

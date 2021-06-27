@@ -12,16 +12,23 @@ using std::vector;
 class dadosAposta{
     private:
     float valorInicial;
+    float valorAtual;
+    float valorFinal;
     int qtdApostas;
-    vector<float> numerosUsuario;
-    vector<float> numerosSorteados;
+    float valorAposta;
+    vector<int> numerosUsuario;
+    vector<int> numerosSorteados;
     payoffTable *tabelaDePagamento;
 
     public:
     //construtor e destrutor
-    dadosAposta( float dinheiroInicial, int rodadas, vector<float> numerosApostados, payoffTable *tabela );
+    dadosAposta( float dinheiroInicial, int rodadas, float valorApostado, vector<int> numerosApostados, payoffTable *tabela );
     ~dadosAposta();
 
+    void mensagemSorteio(int numRodada);
+    void mensagemNumerosSorteados();
+    void mensagemResultado(int qtd, float valor);
+    void mensagemFinal();
     void realizaRodadas();
     void sorteiaNumeros();
     int checaQtdAcertos();

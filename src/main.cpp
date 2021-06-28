@@ -13,10 +13,10 @@ using std::ifstream;
 #include "../include/payoffTable.hpp"
 #include "../include/dadosAposta.hpp"
 
-void apostaLida( float a, int b, int c, vector<int> vetor, int qtd ){
+void apostaLida( int a, int b, int c, vector<int> vetor, int qtd ){
     int i = 0;
     cout << "     >>> " << "Aposta lida com sucesso!" << endl ;
-    cout << "     " << "Você apostará um total de" << " R$" << a*b << endl;
+    cout << "     " << "Você apostará um total de" << " R$" << a << endl;
     cout << "     " << "Jogará um total de " << b << " rodadas" << endl << endl << endl;
     cout << "     " << "Sua aposta tem " << c << " números," << "são eles: ";
     cout << "[";
@@ -41,7 +41,7 @@ int main( int argc, char *argv[]){
     int qtdNumerosApostados;
     
     
-    float saldoInicial = atof(argv[1]), valorApostado = atof(argv[3]); 
+    float saldoInicial = atof(argv[1]);
     int rodadas = atoi(argv[2]);
 
     vector <int> numerosApostados;
@@ -53,11 +53,11 @@ int main( int argc, char *argv[]){
 
     qtdNumerosApostados = numerosApostados.size();
 
-    apostaLida( valorApostado, rodadas, qtdNumerosApostados, numerosApostados,qtdNumerosApostados );
+    apostaLida( saldoInicial ,rodadas, qtdNumerosApostados, numerosApostados,qtdNumerosApostados );
     tabela->printaRetorno(qtdNumerosApostados); 
 
     //Instancia os dados
-    dadosAposta *dados = new dadosAposta( saldoInicial, rodadas, valorApostado, numerosApostados, tabela);
+    dadosAposta *dados = new dadosAposta( saldoInicial, rodadas, numerosApostados, tabela);
 
     //Realiza as rodadas de aposta
     dados->realizaRodadas();

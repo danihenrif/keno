@@ -15,14 +15,13 @@ class dadosAposta{
     float valorAtual;
     float valorFinal;
     int qtdApostas;
-    float valorAposta;
     vector<int> numerosUsuario;
     vector<int> numerosSorteados;
     payoffTable *tabelaDePagamento;
 
     public:
     //construtor e destrutor
-    dadosAposta( float dinheiroInicial, int rodadas, float valorApostado, vector<int> numerosApostados, payoffTable *tabela );
+    dadosAposta( float dinheiroInicial, int rodadas, vector<int> numerosApostados, payoffTable *tabela );
     ~dadosAposta();
 
     void mensagemSorteio(int numRodada);

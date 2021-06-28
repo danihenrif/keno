@@ -1,11 +1,10 @@
 #include "../include/dadosAposta.hpp"
 
-dadosAposta::dadosAposta( float dinheiroInicial, int rodadas, float valorApostado, vector<int> numerosApostados, payoffTable *tabela){
+dadosAposta::dadosAposta( float dinheiroInicial, int rodadas, vector<int> numerosApostados, payoffTable *tabela){
     this->valorInicial = dinheiroInicial;
     this->valorAtual = 0;
     this->valorFinal = valorInicial;
     this->qtdApostas = rodadas;
-    this->valorAposta = valorApostado;
     this->numerosUsuario = numerosApostados;
     this->tabelaDePagamento = tabela;
 }
@@ -17,7 +16,7 @@ dadosAposta::~dadosAposta(){
 void dadosAposta::mensagemSorteio(int numRodada){
     cout << "     -------------------------------------------------------------------------------------------------" << endl;
     cout << "     " << "Essa é a rodada #" << numRodada + 1 << " de " << this->qtdApostas;
-    cout << ", sua aposta é de R$" << this->valorAposta << "." << " Boa sorte :)" << endl;
+    cout << ", sua aposta é de R$" << this->valorInicial/this->qtdApostas << "." << " Boa sorte :)" << endl;
 
 }
 void dadosAposta::mensagemNumerosSorteados(){
@@ -42,16 +41,16 @@ void dadosAposta::mensagemResultado(int qtd, float valor){
         cout << " Sua taxa de retorno é " << valor << endl << endl ;
         this->valorAtual = 0;
         cout << "     " << "Assim, você sai com R$ " << this->valorAtual << endl;
-        this->valorFinal = this->valorFinal - this->valorAposta + valorAtual;
+        this->valorFinal = this->valorFinal - this->valorInicial/this->qtdApostas + valorAtual;
         cout << "     " << "Você possui : R$" << valorFinal << endl << endl;
     cout << "     -------------------------------------------------------------------------------------------------" << endl;
     }
     else{
         cout << "     " << "Você obteve " << qtd << " hits de " << this->numerosUsuario.size() << ".";
         cout << " Sua taxa de retorno é " << valor << endl << endl ;
-        this->valorAtual += this->valorAposta * valor;
+        this->valorAtual += this->valorInicial/this->qtdApostas * valor;
         cout << "     " << "Assim, você sai com R$ " <<  valorAtual << endl;
-        this->valorFinal = this->valorFinal - this->valorAposta + valorAtual;
+        this->valorFinal = this->valorFinal - this->valorInicial/this->qtdApostas + valorAtual;
         cout << "     " << "Você possui : R$" << valorFinal<< endl << endl;
         this->valorAtual = 0;
         cout << "     -------------------------------------------------------------------------------------------------" << endl;
@@ -65,7 +64,7 @@ void dadosAposta::mensagemFinal(){
     cout << "     " << " >>> " << "Fim das rodadas" << endl << endl ;
 
     cout << "     " << "============= SUMÁRIO =============" << endl;
-    cout << "     " << " >>> " << "Você apostou um total de R$ " << this->valorAposta * this->qtdApostas << endl;
+    cout << "     " << " >>> " << "Você apostou um total de R$ " << this->valorInicial/this->qtdApostas * this->qtdApostas << endl;
     
     if(winOrLose < this->valorInicial){
         cout << "     " << " >>> " << "Você perdeu um total de R$ " << winOrLose << ":(" << endl;

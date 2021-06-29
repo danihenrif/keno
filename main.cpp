@@ -34,6 +34,19 @@ void apostaLida( float a, int b, int c, vector<int> vetor, int qtd ){
     cout << "     " << "Você pode checar os seus possíveis retornos na tabela :" << endl << endl;
  }
 
+bool checaNumerosRepetidos(vector<int> a){
+    int aux = 0;
+    for(int i = 0; i < a.size() ; i++){
+        aux = a[i];
+        for(int j = i + 1 ; j < a.size() ; j++){
+            if(aux == a[j]){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 int main( int argc, char *argv[]){
    
     ifstream arquivo("bet.dat");
@@ -59,10 +72,17 @@ int main( int argc, char *argv[]){
     //Carregar o vetor com os valores de aposta
     for ( int i = 2; i < entrada.size() ; i++ ){
         numerosApostados.push_back( entrada[i] );
+        
         //Ja há 18 argumentos
         if(i == 17){
             cout << "Há muitos numeros apostados, edite o arquivo bet.dat para continuar jogando!" << endl;
+            return 0;
         }
+    }
+
+    if(checaNumerosRepetidos(numerosApostados)){
+        cout << "Há números repetidos na sequência, edite o arquivo bet.dat para continuar jogando!" << endl;
+        return 0;
     }
 
     qtdNumerosApostados = numerosApostados.size();

@@ -21,7 +21,7 @@ class dadosAposta{
 
     public:
     //construtor e destrutor
-    dadosAposta( float dinheiroInicial, int rodadas, vector<int> numerosApostados, payoffTable *tabela );
+    dadosAposta( float dinheiroInicial, int rodadas, vector<int> numerosApostados, payoffTable *tabelaDePagamento );
     ~dadosAposta();
 
     void mensagemSorteio(int numRodada);

@@ -64,7 +64,7 @@ void dadosAposta::mensagemFinal(){
     cout << "     " << " >>> " << "Fim das rodadas" << endl << endl ;
 
     cout << "     " << "============= SUMÁRIO =============" << endl;
-    cout << "     " << " >>> " << "Você apostou um total de R$ " << this->valorInicial/this->qtdApostas * this->qtdApostas << endl;
+    cout << "     " << " >>> " << "Você apostou um total de R$ " << this->valorInicial << endl;
     
     if(winOrLose < this->valorInicial){
         cout << "     " << " >>> " << "Você perdeu um total de R$ " << winOrLose << ":(" << endl;

@@ -13,7 +13,7 @@ using std::ifstream;
 #include "../include/payoffTable.hpp"
 #include "../include/dadosAposta.hpp"
 
-void apostaLida( int a, int b, int c, vector<int> vetor, int qtd ){
+void apostaLida( float a, int b, int c, vector<int> vetor, int qtd ){
     int i = 0;
     cout << "     >>> " << "Aposta lida com sucesso!" << endl ;
     cout << "     " << "Você apostará um total de" << " R$" << a << endl;

@@ -4,6 +4,8 @@
 using std::endl;
 using std::cout;
 
+#include <unistd.h>
+
 #include <vector>
 using std::vector;
 
@@ -21,9 +23,11 @@ class dadosAposta{
 
     public:
     //construtor e destrutor
+    dadosAposta();
     dadosAposta( float dinheiroInicial, int rodadas, vector<int> numerosApostados, payoffTable *tabelaDePagamento );
     ~dadosAposta();
 
+    void apostaLida( int qtdNumerosApostados );
     void mensagemSorteio(int numRodada);
     void mensagemNumerosSorteados();
     void mensagemResultado(int qtd, float valor);

@@ -1,5 +1,10 @@
 #include "../include/dadosAposta.hpp"
 
+//Construtor padrão
+dadosAposta::dadosAposta(){
+
+}
+//Construtor
 dadosAposta::dadosAposta( float dinheiroInicial, int rodadas, vector<int> numerosApostados, payoffTable *tabela){
     this->valorInicial = dinheiroInicial;
     this->valorAtual = 0;
@@ -8,7 +13,7 @@ dadosAposta::dadosAposta( float dinheiroInicial, int rodadas, vector<int> numero
     this->numerosUsuario = numerosApostados;
     this->tabelaDePagamento = tabela;
 }
-
+//Destrutor
 dadosAposta::~dadosAposta(){
 
 }
@@ -16,14 +21,43 @@ dadosAposta::~dadosAposta(){
 void dadosAposta::mensagemSorteio(int numRodada){
     cout << "     -------------------------------------------------------------------------------------------------" << endl;
     cout << "     " << "Essa é a rodada #" << numRodada + 1 << " de " << this->qtdApostas;
+    sleep(1);
     cout << ", sua aposta é de R$" << this->valorInicial/this->qtdApostas << "." << " Boa sorte :)" << endl;
+    sleep(2);
+
 
 }
+
+void dadosAposta::apostaLida( int qtdNumerosApostados){
+    int i = 0;
+    cout << "     <<< Lendo o arquivo [bet.dat]..." << endl; 
+    sleep(2);
+    cout << "     >>> " << "Arquivo lido com sucesso!" << endl ;
+    sleep(2);
+    cout << "     " << "Você apostará um total de" << " R$" << this->valorInicial << endl;
+    cout << "     " << "Jogará um total de " << this->qtdApostas << " rodadas" << endl << endl << endl;
+    cout << "     " << "Sua aposta tem " << qtdNumerosApostados << " números," << "são eles: ";
+    sleep(2);
+    cout << "[";
+    while( i < qtdNumerosApostados){
+        if( i == qtdNumerosApostados-1 ){
+            cout << this->numerosUsuario[i];
+        }
+        else{
+            cout << this->numerosUsuario[i] << ",";
+        }
+        i++;
+    }
+    cout << "]" << endl;
+    cout << "     " << "Você pode checar os seus possíveis retornos na tabela :" << endl << endl;
+    sleep(2);
+ }
 
 void dadosAposta::mensagemNumerosSorteados(){
     int qtd = this->numerosSorteados.size(), i = 0;
     cout << "     " << "Os números sorteados são: ";
     cout << "[";
+    sleep(2);
     while( i < qtd){
         if( i == qtd-1 ){
             cout << this->numerosSorteados[i];
@@ -34,6 +68,7 @@ void dadosAposta::mensagemNumerosSorteados(){
         i++;
     }
     cout << "]" << endl << endl;
+    sleep(2);
 }
 
 void dadosAposta::mensagemResultado(int qtd, float valor){
@@ -150,18 +185,20 @@ void dadosAposta::realizaRodadas(){
     int qtdAcertos;
 
     for(int i = 0 ; i < this->qtdApostas ; i++){    
+        sleep(2);
         mensagemSorteio(i);
         sorteiaNumeros();
         mensagemNumerosSorteados();
-
-        qtdAcertos = checaQtdAcertos();
+        qtdAcertos = checaQtdAcertos();       
 
         //Pega o retorno na tabela
         valorRetorno = this->tabelaDePagamento->getRetorno( this->numerosUsuario.size(), qtdAcertos);     
 
         mensagemResultado(qtdAcertos, valorRetorno);
     }
-    
+    sleep(2);
+    cout << "     Processando resultado....." << endl;
+    sleep(2);
     mensagemFinal();
 
 }

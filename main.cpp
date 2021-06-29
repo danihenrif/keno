@@ -13,27 +13,14 @@ using std::ifstream;
 #include "include/payoffTable.hpp"
 #include "include/dadosAposta.hpp"
 
-void apostaLida( float a, int b, int c, vector<int> vetor, int qtd ){
-    int i = 0;
-    cout << "     <<< Lendo o arquivo [bet.dat]..." << endl; 
-    cout << "     >>> " << "Arquivo lida com sucesso!" << endl ;
-    cout << "     " << "Você apostará um total de" << " R$" << a << endl;
-    cout << "     " << "Jogará um total de " << b << " rodadas" << endl << endl << endl;
-    cout << "     " << "Sua aposta tem " << c << " números," << "são eles: ";
-    cout << "[";
-    while( i < qtd){
-        if( i == qtd-1 ){
-            cout << vetor[i];
-        }
-        else{
-            cout << vetor[i] << ",";
-        }
-        i++;
-    }
-    cout << "]" << endl;
-    cout << "     " << "Você pode checar os seus possíveis retornos na tabela :" << endl << endl;
- }
-
+/*
+* A função checa se há números repetidos dentro de um determinado vector a
+* 
+* @param a determinado vetor
+*
+* @return true se pelomenos um valor se repete
+* @return false se nenhum valor do vetor se repete
+*/
 bool checaNumerosRepetidos(vector<int> a){
     int aux = 0;
     for(int i = 0; i < a.size() ; i++){
@@ -48,32 +35,42 @@ bool checaNumerosRepetidos(vector<int> a){
 }
 
 int main( int argc, char *argv[]){
-   
+    //Abre o arquivo
     ifstream arquivo("bet.dat");
+    //Vetor para guardade a entrada do arquivo
     vector<float> entrada;
+    //Auxiliar para ler o arquivo
     float num;
+    //Guarda a quantidade de números que serão apostados
+    int qtdNumerosApostados;
+    //Instancia a tabela
+    payoffTable *tabela = new payoffTable();
+    //Guarda o saldo inicial do usuário
+    float saldoInicial;
+    //Guarda a quantidade de apostas 
+    int rodadas;
+    //Guarda os números apostados    
+    vector <int> numerosApostados;
 
+    //Checa se o arquivo foi aberto
+    if(arquivo.bad()){
+        std::cerr << "Problema ao abrir o arquivo !!!" << endl;
+        exit(1);
+    }
+
+    //Lê o arquivo
     while(arquivo >> num){
         entrada.push_back(num);
     }
+    
+    saldoInicial = entrada[0];
+    rodadas = entrada[1];
 
-    //Instancia a tabela
-    payoffTable *tabela = new payoffTable();
-    
-    //Guarda a quantidade de números que serão apostados
-    int qtdNumerosApostados;
-    
-    
-    float saldoInicial = entrada[0];
-    int rodadas = entrada[1];
-
-    vector <int> numerosApostados;
-    
     //Carregar o vetor com os valores de aposta
     for ( int i = 2; i < entrada.size() ; i++ ){
         numerosApostados.push_back( entrada[i] );
         
-        //Ja há 18 argumentos
+        //Checa se há muitos argumentos
         if(i == 17){
             cout << "Há muitos numeros apostados, edite o arquivo bet.dat para continuar jogando!" << endl;
             return 0;
@@ -87,11 +84,11 @@ int main( int argc, char *argv[]){
 
     qtdNumerosApostados = numerosApostados.size();
 
-    apostaLida( saldoInicial ,rodadas, qtdNumerosApostados, numerosApostados,qtdNumerosApostados );
-    tabela->printaRetorno(qtdNumerosApostados); 
-
     //Instancia os dados
     dadosAposta *dados = new dadosAposta( saldoInicial, rodadas, numerosApostados, tabela);
+
+    dados->apostaLida( qtdNumerosApostados );
+    tabela->printaRetorno( qtdNumerosApostados ); 
 
     //Realiza as rodadas de aposta
     dados->realizaRodadas();

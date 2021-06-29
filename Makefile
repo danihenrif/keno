@@ -14,16 +14,16 @@ bin/dadosAposta.o: src/dadosAposta.cpp bin/payoffTable.o
 	g++ src/dadosAposta.cpp -Iinclude -O0  -Wall -pedantic -std=c++11 -c -o bin/dadosAposta.o
 
 # Compila o arquivo main.cpp, gera o arquivo objeto main.o e o executável
-bin/main.o: src/main.cpp bin/dadosAposta.o
-	g++ src/main.cpp -Iinclude -O0  -Wall -pedantic -std=c++11 -c  -o bin/main.o
+bin/main.o: main.cpp bin/dadosAposta.o
+	g++ main.cpp -Iinclude -O0  -Wall -pedantic -std=c++11 -c  -o bin/main.o
 
 # Cria o arquivo executável
 main: bin/main.o
 	g++ bin/*.o -Iinclude -O0  -Wall -pedantic -std=c++11 -o main
 
-# Executa o programa
+# Executa o programa com o arquivo
 run: all
-	./main 100 3 1 2 3 4 5 
+	./main bet.dat
 
 # Apaga a pasta de arquivos objetos e o executável
 clean:

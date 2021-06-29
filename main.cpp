@@ -10,12 +10,13 @@ using std::vector;
 #include <fstream>
 using std::ifstream;
 
-#include "../include/payoffTable.hpp"
-#include "../include/dadosAposta.hpp"
+#include "include/payoffTable.hpp"
+#include "include/dadosAposta.hpp"
 
 void apostaLida( float a, int b, int c, vector<int> vetor, int qtd ){
     int i = 0;
-    cout << "     >>> " << "Aposta lida com sucesso!" << endl ;
+    cout << "     <<< Lendo o arquivo [bet.dat]..." << endl; 
+    cout << "     >>> " << "Arquivo lida com sucesso!" << endl ;
     cout << "     " << "Você apostará um total de" << " R$" << a << endl;
     cout << "     " << "Jogará um total de " << b << " rodadas" << endl << endl << endl;
     cout << "     " << "Sua aposta tem " << c << " números," << "são eles: ";
@@ -34,6 +35,15 @@ void apostaLida( float a, int b, int c, vector<int> vetor, int qtd ){
  }
 
 int main( int argc, char *argv[]){
+   
+    ifstream arquivo("bet.dat");
+    vector<float> entrada;
+    float num;
+
+    while(arquivo >> num){
+        entrada.push_back(num);
+    }
+
     //Instancia a tabela
     payoffTable *tabela = new payoffTable();
     
@@ -41,14 +51,18 @@ int main( int argc, char *argv[]){
     int qtdNumerosApostados;
     
     
-    float saldoInicial = atof(argv[1]);
-    int rodadas = atoi(argv[2]);
+    float saldoInicial = entrada[0];
+    int rodadas = entrada[1];
 
     vector <int> numerosApostados;
     
     //Carregar o vetor com os valores de aposta
-    for ( int i = 4; i < argc ; i++ ){
-        numerosApostados.push_back( atof(argv[i]));
+    for ( int i = 2; i < entrada.size() ; i++ ){
+        numerosApostados.push_back( entrada[i] );
+        //Ja há 18 argumentos
+        if(i == 17){
+            cout << "Há muitos numeros apostados, edite o arquivo bet.dat para continuar jogando!" << endl;
+        }
     }
 
     qtdNumerosApostados = numerosApostados.size();

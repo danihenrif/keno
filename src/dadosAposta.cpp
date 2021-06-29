@@ -19,6 +19,7 @@ void dadosAposta::mensagemSorteio(int numRodada){
     cout << ", sua aposta é de R$" << this->valorInicial/this->qtdApostas << "." << " Boa sorte :)" << endl;
 
 }
+
 void dadosAposta::mensagemNumerosSorteados(){
     int qtd = this->numerosSorteados.size(), i = 0;
     cout << "     " << "Os números sorteados são: ";
@@ -58,6 +59,7 @@ void dadosAposta::mensagemResultado(int qtd, float valor){
 
 }
 
+
 void dadosAposta::mensagemFinal(){
     float winOrLose = this->valorInicial - this->valorFinal;
     
@@ -81,6 +83,10 @@ void dadosAposta::mensagemFinal(){
 
 
 }
+
+/*! 
+ * Métodos para sortear os números
+ */
 
 void dadosAposta::sorteiaNumeros(){
     
@@ -114,6 +120,10 @@ void dadosAposta::sorteiaNumeros(){
     }   
 }
 
+/*! 
+ * Método para checar a quantidade de acertos na aposta
+ */
+
 int dadosAposta::checaQtdAcertos(){
     vector<int>::iterator inicio = this->numerosUsuario.begin();
     vector<int>::iterator fim = this->numerosUsuario.end();
@@ -130,6 +140,10 @@ int dadosAposta::checaQtdAcertos(){
     return qtdAcertos;
 }
 
+/*! 
+ * Aqui é realizado as rodadas do jogo, esse método chamas as funções
+ * que foram modularizadas internamente
+ */
 void dadosAposta::realizaRodadas(){
     
     float valorRetorno;
